@@ -40,7 +40,7 @@ describe Table do
   it "should create one line of text per row" do 
     t = Table.new(default_data())
     # [["a", "b"], ["c", nil]]
-    t.format.split("\n").size.should(eq(2))
+    t.format.split("\n").size.should(eq(3)) #+1 for header divider
   end
   it "should allow you to add rows" do 
     t = Table.new(default_data())
@@ -55,8 +55,7 @@ describe Table do
     t.add_row(Array(String|Nil).new+["e", "f"])
     t.data.size.should(eq(3))
     t.data.inspect.should(eq("[[\"a\", \"b\"], [\"c\", nil], [\"e\", \"f\"]]"))
-    # [["a", "b"], ["c", nil]]
-    t.format.split("\n").size.should(eq(3))
+    t.format.split("\n").size.should(eq(4)) #+1 for header divider
   end
 
   it "should raise MissingTableData when added badly sized row" do 
@@ -99,7 +98,7 @@ describe Table do
   it "should have a configurable left border" do
     t = Table.new(default_data())
     # [["a", "b"], ["c", nil]]
-    options = Hash(Symbol,String).new
+    options = Hash(Symbol,String|Bool).new
     options[:left_border] = "X "
     formatted = t.format(options) 
     formatted.includes?("X a").should(be_true())
@@ -108,7 +107,7 @@ describe Table do
   it "should have a configurable right border" do
     t = Table.new(default_data())
     # [["a", "b"], ["c", nil]]
-    options = Hash(Symbol,String).new
+    options = Hash(Symbol,String|Bool).new
     options[:right_border] = " X"
     formatted = t.format(options) 
     formatted.includes?("b X").should(be_true())
@@ -117,11 +116,42 @@ describe Table do
   it "should have a configurable divider" do
     t = Table.new(default_data())
     # [["a", "b"], ["c", nil]]
-    options = Hash(Symbol,String).new
+    options = Hash(Symbol,String|Bool).new
     options[:divider] = " X "
     formatted = t.format(options)
     formatted.includes?("a X b").should(be_true())
     formatted.includes?("c X  ").should(be_true())
+  end
+
+  it "should divide the header by default" do
+    t = Table.new(default_data())
+    t.add_row(Array(String|Nil).new+["wide", "rows"])
+    # [["a", "b"], ["c", nil], ["wide", "rows"]]
+    formatted = t.format
+    rows = formatted.split("\n")
+    rows.size.should(eq(4))
+    rows[1].should(eq("| ---- | ---- |"))
+  end
+  it "should allow custom header divider" do
+    t = Table.new(default_data())
+    t.add_row(Array(String|Nil).new+["wide", "rows"])
+    # [["a", "b"], ["c", nil], ["wide", "rows"]]
+    options = Hash(Symbol,String|Bool).new
+    options[:header_divider] = "x"
+
+    formatted = t.format(options)
+    rows = formatted.split("\n")
+    rows.size.should(eq(4))
+    rows[1].should(eq("| xxxx | xxxx |"))
+  end
+  it "should not allow a header divider > 1 character" do
+    t = Table.new(default_data())
+    # [["a", "b"], ["c", nil]]
+    options = Hash(Symbol,String|Bool).new
+    options[:header_divider] = "123"
+    expect_raises Exception do
+      t.format(options)
+    end
   end
 end
 

@@ -35,19 +35,30 @@ class Table
   # * separate each item with " | "
   # These defaults can be overridden by specifying :left_border, :right_border,
   # or :divider (respectively) in the options.
+  # 
+  # By default it assumes the first row is a header. 
+  # To disable the divider under the first row set options[:show_header] = false
+  # To change the character used for the divider set 
+  # options[:header_divider] = <any single character>
   #
   # Example:
   # [["things", "stuff"],["a", "b"], ["c", nil]]
   # Would become
   # | things | stuff |
+  # | ------ | ----- |
   # | a      | b     |
   # | c      |       |
 
-  def format(options : Hash(Symbol, String) = Hash(Symbol,String).new) : String
+  def format(options : Hash(Symbol, String | Bool) = Hash(Symbol, String | Bool).new) : String
 
     options[:divider] = " | " unless options.has_key?(:divider)
     options[:left_border] = "| " unless options.has_key?(:left_border)
     options[:right_border]  = " |" unless options.has_key?(:right_border)
+    options[:header_divider] = "-" unless options.has_key?(:header_divider)
+    if options[:header_divider].to_s.size > 1
+      raise "header must be a string with only one character"
+    end
+    options[:show_header] = true unless options.has_key?(:show_header)
     formatted(extract_columns(@data), options)
   end
   
@@ -68,10 +79,21 @@ class Table
     end
     result
   end
-
-  private def formatted(columns : Array(Column), options : Hash(Symbol, String)) : String
+  # Private ---------------------------
+  private def insert_header_into_columns(header_string : String, columns : Array(Column)) : Array(Column)
+    columns.each do | col |
+      col.insert((header_string * col.width), 1)
+    end
+    columns
+  end
+  private def formatted(columns : Array(Column), options : Hash(Symbol, String | Bool)) : String
+    if options[:show_header]
+      insert_header_into_columns(options[:header_divider].to_s, columns)
+    end
+    
     column_max_idx = columns.size() -1
     row_max_idx = columns.first.strings.size() -1
+
     formatted_column_data = columns.map{|c| c.formatted } # Array(Array(String)
     
     result = String.build do | str | 
