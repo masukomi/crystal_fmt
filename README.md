@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/masukomi/crystal_fmt.svg?branch=master)](https://travis-ci.org/masukomi/crystal_fmt)
+
 # Crystal Format (crystal_fmt)
 
 Takes a grid of strings and produces a text table with 
