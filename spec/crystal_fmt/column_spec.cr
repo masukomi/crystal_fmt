@@ -32,6 +32,11 @@ describe Column do
     formatted = c.formatted
     formatted[0].should(eq("1   "))
   end
+  it "should used padding of instance by default" do
+    c = Column.new(Array(String | Nil).new + ["1", "4444"], :left)
+    formatted = c.formatted
+    formatted[0].should(eq("   1"))
+  end
   it "should be pad left when specifed" do
     c = Column.new(Array(String | Nil).new + ["1", "4444"])
     formatted = c.formatted(:left)

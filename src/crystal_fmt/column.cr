@@ -1,6 +1,9 @@
 class Column
   getter :strings
-  def initialize(@strings : Array(String | Nil) = Array(String|Nil).new)
+  getter :padding
+  setter :padding
+  def initialize(@strings : Array(String | Nil) = Array(String|Nil).new,
+                @padding : Symbol = :right)
     @max = -1
   end
 
@@ -18,7 +21,7 @@ class Column
     @max = ((compacted.size > 0) ? compacted.map { |x| x.size }.max : 0)
   end
 
-  def formatted(padding : Symbol = :right) : Array(String)
+  def formatted(padding : Symbol = @padding ) : Array(String)
     if ![:left, :right].includes? padding
       raise "unsupported padding: #{padding}"
     end
