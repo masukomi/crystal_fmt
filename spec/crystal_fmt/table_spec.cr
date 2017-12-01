@@ -1,8 +1,9 @@
 require "../spec_helper"
 
-def default_data() : Array(Array(String | Nil))
+def default_data : Array(Array(String | Nil))
   Array(Array(String | Nil)).new << ["a", "b"] << ["c", nil]
 end
+
 describe Table do
   # data = reset_data()
   it "should be initializable with a full matrix" do
@@ -11,7 +12,7 @@ describe Table do
   end
   it "should raise MissingTableData when given uneven matrix" do
     data = default_data()
-    data << Array(String | Nil).new+[nil]
+    data << Array(String | Nil).new + [nil]
     expect_raises (MissingTableData) do
       t = Table.new(data)
     end
@@ -28,7 +29,7 @@ describe Table do
   end
   it "should extract columns from data after adding a row" do
     t = Table.new(default_data())
-    t.add_row(Array(String|Nil).new+["e", "f"])
+    t.add_row(Array(String | Nil).new + ["e", "f"])
     columns = t.extract_columns(t.data)
     columns.size.should(eq(2))
     columns.first.size.should(eq(3))
@@ -37,39 +38,39 @@ describe Table do
     columns.last.strings[-1].should(eq("f"))
   end
 
-  it "should create one line of text per row" do 
+  it "should create one line of text per row" do
     t = Table.new(default_data())
     # [["a", "b"], ["c", nil]]
-    t.format.split("\n").size.should(eq(3)) #+1 for header divider
+    t.format.split("\n").size.should(eq(3)) # +1 for header divider
   end
-  it "should allow you to add rows" do 
+  it "should allow you to add rows" do
     t = Table.new(default_data())
-    t.add_row(Array(String|Nil).new+["e", "f"])
+    t.add_row(Array(String | Nil).new + ["e", "f"])
     t.data.size.should(eq(3))
     t.data.inspect.should(eq("[[\"a\", \"b\"], [\"c\", nil], [\"e\", \"f\"]]"))
     # [["a", "b"], ["c", nil]]
   end
   it "should format correctly after adding a row" do
-    #because it didn't once
+    # because it didn't once
     t = Table.new(default_data())
-    t.add_row(Array(String|Nil).new+["e", "f"])
+    t.add_row(Array(String | Nil).new + ["e", "f"])
     t.data.size.should(eq(3))
     t.data.inspect.should(eq("[[\"a\", \"b\"], [\"c\", nil], [\"e\", \"f\"]]"))
-    t.format.split("\n").size.should(eq(4)) #+1 for header divider
+    t.format.split("\n").size.should(eq(4)) # +1 for header divider
   end
 
-  it "should raise MissingTableData when added badly sized row" do 
+  it "should raise MissingTableData when added badly sized row" do
     t = Table.new(default_data())
     # [["a", "b"], ["c", nil]]
     expect_raises (MissingTableData) do
-      t.add_row(Array(String|Nil).new+["d"])
+      t.add_row(Array(String | Nil).new + ["d"])
     end
   end
   it "should allow you to add a row of any size to an empty table" do
-    t = Table.new()
-    t.add_row(Array(String|Nil).new+["d"])
-    t = Table.new()
-    t.add_row(Array(String|Nil).new+["e", "f"])
+    t = Table.new
+    t.add_row(Array(String | Nil).new + ["d"])
+    t = Table.new
+    t.add_row(Array(String | Nil).new + ["e", "f"])
   end
 
   it "should format with | between each item" do
@@ -98,25 +99,25 @@ describe Table do
   it "should have a configurable left border" do
     t = Table.new(default_data())
     # [["a", "b"], ["c", nil]]
-    options = Hash(Symbol,String|Bool).new
+    options = Hash(Symbol, String | Bool).new
     options[:left_border] = "X "
-    formatted = t.format(options) 
+    formatted = t.format(options)
     formatted.includes?("X a").should(be_true())
     formatted.includes?("X c").should(be_true())
   end
   it "should have a configurable right border" do
     t = Table.new(default_data())
     # [["a", "b"], ["c", nil]]
-    options = Hash(Symbol,String|Bool).new
+    options = Hash(Symbol, String | Bool).new
     options[:right_border] = " X"
-    formatted = t.format(options) 
+    formatted = t.format(options)
     formatted.includes?("b X").should(be_true())
     formatted.includes?("  X").should(be_true())
   end
   it "should have a configurable divider" do
     t = Table.new(default_data())
     # [["a", "b"], ["c", nil]]
-    options = Hash(Symbol,String|Bool).new
+    options = Hash(Symbol, String | Bool).new
     options[:divider] = " X "
     formatted = t.format(options)
     formatted.includes?("a X b").should(be_true())
@@ -125,7 +126,7 @@ describe Table do
 
   it "should divide the header by default" do
     t = Table.new(default_data())
-    t.add_row(Array(String|Nil).new+["wide", "rows"])
+    t.add_row(Array(String | Nil).new + ["wide", "rows"])
     # [["a", "b"], ["c", nil], ["wide", "rows"]]
     formatted = t.format
     rows = formatted.split("\n")
@@ -134,9 +135,9 @@ describe Table do
   end
   it "should allow custom header divider" do
     t = Table.new(default_data())
-    t.add_row(Array(String|Nil).new+["wide", "rows"])
+    t.add_row(Array(String | Nil).new + ["wide", "rows"])
     # [["a", "b"], ["c", nil], ["wide", "rows"]]
-    options = Hash(Symbol,String|Bool).new
+    options = Hash(Symbol, String | Bool).new
     options[:header_divider] = "x"
 
     formatted = t.format(options)
@@ -147,12 +148,10 @@ describe Table do
   it "should not allow a header divider > 1 character" do
     t = Table.new(default_data())
     # [["a", "b"], ["c", nil]]
-    options = Hash(Symbol,String|Bool).new
+    options = Hash(Symbol, String | Bool).new
     options[:header_divider] = "123"
     expect_raises Exception do
       t.format(options)
     end
   end
 end
-
-

@@ -48,14 +48,14 @@ describe Column do
     formatted[0].should(eq("1   "))
   end
 
-  it "should be able to add strings" do 
-    c = Column.new()
+  it "should be able to add strings" do
+    c = Column.new
     c << "foo"
     c.strings.size.should(eq(1))
     c.strings.first.should(eq("foo"))
   end
-  it "should be able to insert strings" do 
-    c = Column.new(Array(String|Nil).new+["a","c"])
+  it "should be able to insert strings" do
+    c = Column.new(Array(String | Nil).new + ["a", "c"])
     c.insert("b", 1)
     c.strings.size.should(eq(3))
     c.strings.should(eq(["a", "b", "c"]))
