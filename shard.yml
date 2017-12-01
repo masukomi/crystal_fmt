@@ -1,0 +1,9 @@
+name: crystal_fmt
+version: 0.1.0
+
+authors:
+  - masukomi <masukomi@masukomi.org>
+
+crystal: 0.23.1
+
+license: MIT
