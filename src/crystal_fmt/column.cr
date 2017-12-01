@@ -1,6 +1,15 @@
 class Column
-  def initialize(@strings : Array(String | Nil))
+  getter :strings
+  def initialize(@strings : Array(String | Nil) = Array(String|Nil).new)
     @max = -1
+  end
+
+  def size() : Int32
+    @strings.size
+  end
+  
+  def <<(string)
+    @strings << string
   end
 
   def max_length

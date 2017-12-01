@@ -42,4 +42,11 @@ describe Column do
     formatted = c.formatted(:right)
     formatted[0].should(eq("1   "))
   end
+
+  it "should be able to add strings" do 
+    c = Column.new()
+    c << "foo"
+    c.strings.size.should(eq(1))
+    c.strings.first.should(eq("foo"))
+  end
 end
