@@ -3,6 +3,10 @@ class Table
   @data : Array(Array(String | Nil))
   getter :data
   setter :data
+
+  # Can be initialized with an of cells: Array(Array(String | Nil)) 
+  # or nothing and you can add rows of data later with add_rows
+  # Note: all rows of data must be the same length.
   def initialize(@data : Array(Array(String | Nil)) = Array(Array(String | Nil)).new)
     if (@data.size > 0)
       column_count = @data[0].size
@@ -13,6 +17,9 @@ class Table
     end
   end
 
+  # Adds a row of data. 
+  # Note: this must have the same number of items as all the other
+  # rows that have been added.
   def add_row(row : Array(String | Nil))
     if data.size > 0 && data[0].size != row.size
       raise MissingTableData.new(
@@ -20,6 +27,21 @@ class Table
     end
     @data << row
   end
+
+  # Formats the data into a textual table.
+  # By default it will: 
+  # * start each row with "| "
+  # * end each row with " |"
+  # * separate each item with " | "
+  # These defaults can be overridden by specifying :left_border, :right_border,
+  # or :divider (respectively) in the options.
+  #
+  # Example:
+  # [["things", "stuff"],["a", "b"], ["c", nil]]
+  # Would become
+  # | things | stuff |
+  # | a      | b     |
+  # | c      |       |
 
   def format(options : Hash(Symbol, String) = Hash(Symbol,String).new) : String
 
@@ -29,6 +51,24 @@ class Table
     formatted(extract_columns(@data), options)
   end
   
+  # Extracts Column objects from the provided data
+  # primarily for use use by this class, but you may find it
+  # useful too.
+  def extract_columns(data : Array(Array(String | Nil))) : Array(Column)
+    column_count = data[0].size
+    row_count = data.size
+    result = Array(Column).new(column_count)
+    column_count.times do
+      result << Column.new()
+    end
+    (0...row_count).each do |row_idx|
+      (0...column_count).each do | col_idx |
+        result[col_idx] << data[row_idx][col_idx]
+      end
+    end
+    result
+  end
+
   private def formatted(columns : Array(Column), options : Hash(Symbol, String)) : String
     column_max_idx = columns.size() -1
     row_max_idx = columns.first.strings.size() -1
@@ -55,18 +95,4 @@ class Table
     result
   end
   
-  def extract_columns(data : Array(Array(String | Nil))) : Array(Column)
-    column_count = data[0].size
-    row_count = data.size
-    result = Array(Column).new(column_count)
-    column_count.times do
-      result << Column.new()
-    end
-    (0...row_count).each do |row_idx|
-      (0...column_count).each do | col_idx |
-        result[col_idx] << data[row_idx][col_idx]
-      end
-    end
-    result
-  end
 end
