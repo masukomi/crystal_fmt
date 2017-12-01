@@ -1,0 +1,2 @@
+class MissingTableData < Exception
+end
