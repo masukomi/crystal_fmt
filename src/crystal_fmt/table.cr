@@ -49,7 +49,6 @@ class Table
   # | ------ | ----- |
   # | a      | b     |
   # | c      |       |
-
   def format(options : Hash(Symbol, String | Bool) = Hash(Symbol, String | Bool).new) : String
     options[:divider] = " | " unless options.has_key?(:divider)
     options[:left_border] = "| " unless options.has_key?(:left_border)
