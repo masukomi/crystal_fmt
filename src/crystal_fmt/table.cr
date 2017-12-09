@@ -2,6 +2,7 @@ require "./missing_table_data.cr"
 
 class Table
   @data : Array(Array(String | Nil))
+  @columns : Array(Column)
   getter :data
   setter :data
 
@@ -16,12 +17,23 @@ class Table
           "all rows must have an equal number of columns")
       end
     end
+    @columns = Array(Column).new(0)
+  end
+
+  # Allows you to initialize this with an array of columns.
+  # Note: when this initializer is used you will not be able 
+  # to use the add_rows method
+  def initialize(@columns : Array(Column))
+    @data = Array(Array(String | Nil)).new
   end
 
   # Adds a row of data.
   # Note: this must have the same number of items as all the other
   # rows that have been added.
   def add_row(row : Array(String | Nil))
+    if @columns.size > 0
+      raise "Can't add rows to tables initialized with Array(Column)"
+    end
     if data.size > 0 && data[0].size != row.size
       raise MissingTableData.new(
         "all rows must have an equal number of columns")
@@ -65,6 +77,9 @@ class Table
   # primarily for use use by this class, but you may find it
   # useful too.
   def extract_columns(data : Array(Array(String | Nil))) : Array(Column)
+    if @columns.size > 0
+      return @columns
+    end
     column_count = data[0].size
     row_count = data.size
     result = Array(Column).new(column_count)

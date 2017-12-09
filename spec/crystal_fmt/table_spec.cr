@@ -10,6 +10,13 @@ describe Table do
     t = Table.new(default_data())
     t.should(be_a(Table))
   end
+  it "should be initializable with an array of Columns" do
+    c = Column.new(Array(String | Nil).new + ["1", "22", nil, "333", "4444"])
+    cols = Array(Column).new()
+    cols.push(c)
+    t = Table.new(cols)
+    t.should(be_a(Table))
+  end
   it "should raise MissingTableData when given uneven matrix" do
     data = default_data()
     data << Array(String | Nil).new + [nil]
@@ -27,6 +34,14 @@ describe Table do
     columns.first.strings[0].should(eq("a"))
     columns.last.strings[-1].should(eq(nil))
   end
+  it "should return initialization columns" do
+    c = Column.new(Array(String | Nil).new + ["1", "22", nil, "333", "4444"])
+    cols = Array(Column).new()
+    cols.push(c)
+    t = Table.new(cols)
+    t.extract_columns(t.data).should(be(cols))
+  end
+
   it "should extract columns from data after adding a row" do
     t = Table.new(default_data())
     t.add_row(Array(String | Nil).new + ["e", "f"])
@@ -49,6 +64,17 @@ describe Table do
     t.data.size.should(eq(3))
     t.data.inspect.should(eq("[[\"a\", \"b\"], [\"c\", nil], [\"e\", \"f\"]]"))
     # [["a", "b"], ["c", nil]]
+  end
+
+  it "should not allow you to add rows to tables initialized with Array(Column)" do
+    c = Column.new(Array(String | Nil).new + ["1", "22", nil, "333", "4444"])
+    cols = Array(Column).new()
+    cols.push(c)
+    t = Table.new(cols)
+    expect_raises(Exception) do
+      t.add_row(Array(String | Nil).new + ["e", "f"])
+    end
+
   end
   it "should format correctly after adding a row" do
     # because it didn't once
