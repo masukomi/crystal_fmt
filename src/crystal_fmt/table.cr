@@ -21,10 +21,10 @@ class Table
   end
 
   # Allows you to initialize this with an array of columns.
-  # Note: when this initializer is used you will not be able 
+  # Note: when this initializer is used you will not be able
   # to use the add_rows method
   def initialize(@columns : Array(Column))
-    columns_sizes = @columns.map{|x| x.size}.uniq
+    columns_sizes = @columns.map { |x| x.size }.uniq
     if columns_sizes.size > 1
       raise MissingTableData.new("All columns must be of equal size")
     end

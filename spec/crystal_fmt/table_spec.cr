@@ -12,7 +12,7 @@ describe Table do
   end
   it "should be initializable with an array of Columns" do
     c = Column.new(Array(String | Nil).new + ["1", "22", nil, "333", "4444"])
-    cols = Array(Column).new()
+    cols = Array(Column).new
     cols.push(c)
     t = Table.new(cols)
     t.should(be_a(Table))
@@ -20,7 +20,7 @@ describe Table do
   it "should not be initializable with uneven columns" do
     c = Column.new(Array(String | Nil).new + ["1", "22", nil, "333", "4444"])
     c2 = Column.new(Array(String | Nil).new + ["1", "22", nil, "333", "4444", "5555"])
-    cols = Array(Column).new()
+    cols = Array(Column).new
     cols.push(c)
     cols.push(c2)
 
@@ -47,7 +47,7 @@ describe Table do
   end
   it "should return initialization columns" do
     c = Column.new(Array(String | Nil).new + ["1", "22", nil, "333", "4444"])
-    cols = Array(Column).new()
+    cols = Array(Column).new
     cols.push(c)
     t = Table.new(cols)
     t.extract_columns(t.data).should(be(cols))
@@ -79,13 +79,12 @@ describe Table do
 
   it "should not allow you to add rows to tables initialized with Array(Column)" do
     c = Column.new(Array(String | Nil).new + ["1", "22", nil, "333", "4444"])
-    cols = Array(Column).new()
+    cols = Array(Column).new
     cols.push(c)
     t = Table.new(cols)
     expect_raises(Exception) do
       t.add_row(Array(String | Nil).new + ["e", "f"])
     end
-
   end
   it "should format correctly after adding a row" do
     # because it didn't once
