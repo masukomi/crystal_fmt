@@ -17,6 +17,17 @@ describe Table do
     t = Table.new(cols)
     t.should(be_a(Table))
   end
+  it "should not be initializable with uneven columns" do
+    c = Column.new(Array(String | Nil).new + ["1", "22", nil, "333", "4444"])
+    c2 = Column.new(Array(String | Nil).new + ["1", "22", nil, "333", "4444", "5555"])
+    cols = Array(Column).new()
+    cols.push(c)
+    cols.push(c2)
+
+    expect_raises(MissingTableData) do
+      t = Table.new(cols)
+    end
+  end
   it "should raise MissingTableData when given uneven matrix" do
     data = default_data()
     data << Array(String | Nil).new + [nil]
