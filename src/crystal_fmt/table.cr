@@ -34,7 +34,11 @@ class Table
   # Tells you how wide the table is
   def width : Int32
     if !@data.empty? || !@columns.empty?
-      @columns.empty? ? @data[0].size : @columns.size
+      cols = @columns
+      if @columns.empty?
+        cols = extract_columns(@data)
+      end
+      cols.reduce(0) { |acc, c| acc + c.width }
     else
       0
     end

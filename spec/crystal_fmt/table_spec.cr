@@ -47,13 +47,15 @@ describe Table do
   end
 
   it "should know how wide it is before extracting columns" do
-    t = Table.new(default_data())
-    t.width.should(eq(2))
+    data = Array(Array(String | Nil)).new << ["12345", "6"] << ["c", nil]
+    t = Table.new(data)
+    t.width.should(eq(6))
   end
   it "should know how wide it is after extracting columns" do
-    t = Table.new(default_data())
+    data = Array(Array(String | Nil)).new << ["12345", "6"] << ["c", nil]
+    t = Table.new(data)
     t.extract_columns(t.data)
-    t.width.should(eq(2))
+    t.width.should(eq(6))
   end
   it "should know how wide it is when empty" do
     t = Table.new(Array(Array(String | Nil)).new)
