@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta id="repository-name" content="github.com/masukomi/crystal_fmt">
+  <link href="css/style.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="js/doc.js"></script>
+  <title>Table - github.com/masukomi/crystal_fmt</title>
+</head>
+<body>
+
+<div id="types-list">
+  <div id="search-box">
+    <input type="search" id="search-input" placeholder="Search...">
+  </div>
+
+  <ul>
+    <li><a href="index.html">README</a></li>
+  </ul>
+
+  <ul>
+  
+  <li class=" " data-id="github.com/masukomi/crystal_fmt/Column" data-name="column">
+      <a href="Column.html">Column</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/masukomi/crystal_fmt/CrystalFmt" data-name="crystalfmt">
+      <a href="CrystalFmt.html">CrystalFmt</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/masukomi/crystal_fmt/MissingTableData" data-name="missingtabledata">
+      <a href="MissingTableData.html">MissingTableData</a>
+      
+    </li>
+  
+  <li class=" current" data-id="github.com/masukomi/crystal_fmt/Table" data-name="table">
+      <a href="Table.html">Table</a>
+      
+    </li>
+  
+</ul>
+
+</div>
+
+<div id="main-content">
+<h1 class="type-name">
+
+  <span class="kind">class</span> Table
+
+</h1>
+
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="Table.html">Table</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>Defined in:</h2>
+  
+    
+      <a href="https://github.com/masukomi/crystal_fmt/blob/e233f3084f028fe003f2fe47a6d76e19ebc821e5/src/crystal_fmt/table.cr#L3" target="_blank">crystal_fmt/table.cr</a>
+    
+    <br/>
+  
+
+
+
+
+
+  <h2>Constructors</h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#new%28data%3AArray%28Array%28String%3F%29%29%3DArray%28Array%28String%7CNil%29%29.new%29-class-method" class="signature"><strong>.new</strong>(data : Array(Array(String?)) = <span class="t">Array</span>(<span class="t">Array</span>(<span class="t">String</span> <span class="o">|</span> <span class="t">Nil</span>)).<span class="k">new</span>)</a>
+        
+          <div class="summary"><p>Can be initialized with an of cells: Array(Array(String | Nil)) or nothing and you can add rows of data later with add_rows Note: all rows of data must be the same length.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#new%28columns%3AArray%28Column%29%29-class-method" class="signature"><strong>.new</strong>(columns : Array(Column))</a>
+        
+          <div class="summary"><p>Allows you to initialize this with an array of columns.</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+  <h2>Instance Method Summary</h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#add_row%28row%3AArray%28String%3F%29%29-instance-method" class="signature"><strong>#add_row</strong>(row : Array(String?))</a>
+        
+          <div class="summary"><p>Adds a row of data.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#data%3AArray%28Array%28String%3F%29%29-instance-method" class="signature"><strong>#data</strong> : Array(Array(String?))</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#data%3D%28data%29-instance-method" class="signature"><strong>#data=</strong>(data)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#extract_columns%28data%3AArray%28Array%28String%3F%29%29%29%3AArray%28Column%29-instance-method" class="signature"><strong>#extract_columns</strong>(data : Array(Array(String?))) : Array(Column)</a>
+        
+          <div class="summary"><p>Extracts Column objects from the provided data primarily for use use by this class, but you may find it useful too.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#format%28options%3AHash%28Symbol%2CString%7CBool%29%3DHash%28Symbol%2CString%7CBool%29.new%29%3AString-instance-method" class="signature"><strong>#format</strong>(options : Hash(Symbol, String | Bool) = <span class="t">Hash</span>(<span class="t">Symbol</span>, <span class="t">String</span> <span class="o">|</span> <span class="t">Bool</span>).<span class="k">new</span>) : String</a>
+        
+          <div class="summary"><p>Formats the data into a textual table.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#width%3AInt32-instance-method" class="signature"><strong>#width</strong> : Int32</a>
+        
+          <div class="summary"><p>Tells you how wide the table is</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+<div class="methods-inherited">
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+</div>
+
+
+  <h2>Constructor Detail</h2>
+  
+    <div class="entry-detail" id="new&#40;data:Array&#40;Array&#40;String?&#41;&#41;&#61;Array&#40;Array&#40;String|Nil&#41;&#41;.new&#41;-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(data : Array(Array(String?)) = <span class="t">Array</span>(<span class="t">Array</span>(<span class="t">String</span> <span class="o">|</span> <span class="t">Nil</span>)).<span class="k">new</span>)
+
+        <a class="method-permalink" href="#new%28data%3AArray%28Array%28String%3F%29%29%3DArray%28Array%28String%7CNil%29%29.new%29-class-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Can be initialized with an of cells: Array(Array(String | Nil))
+or nothing and you can add rows of data later with add_rows
+Note: all rows of data must be the same length.</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/masukomi/crystal_fmt/blob/e233f3084f028fe003f2fe47a6d76e19ebc821e5/src/crystal_fmt/table.cr#L12" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="new&#40;columns:Array&#40;Column&#41;&#41;-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(columns : Array(<a href="Column.html">Column</a>))
+
+        <a class="method-permalink" href="#new%28columns%3AArray%28Column%29%29-class-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Allows you to initialize this with an array of columns.
+Note: when this initializer is used you will not be able
+to use the add_rows method</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/masukomi/crystal_fmt/blob/e233f3084f028fe003f2fe47a6d76e19ebc821e5/src/crystal_fmt/table.cr#L26" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+
+
+  <h2>Instance Method Detail</h2>
+  
+    <div class="entry-detail" id="add_row&#40;row:Array&#40;String?&#41;&#41;-instance-method">
+      <div class="signature">
+        
+        def <strong>add_row</strong>(row : Array(String?))
+
+        <a class="method-permalink" href="#add_row%28row%3AArray%28String%3F%29%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Adds a row of data.
+Note: this must have the same number of items as all the other
+rows that have been added.</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/masukomi/crystal_fmt/blob/e233f3084f028fe003f2fe47a6d76e19ebc821e5/src/crystal_fmt/table.cr#L50" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="data:Array&#40;Array&#40;String?&#41;&#41;-instance-method">
+      <div class="signature">
+        
+        def <strong>data</strong> : Array(Array(String?))
+
+        <a class="method-permalink" href="#data%3AArray%28Array%28String%3F%29%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/masukomi/crystal_fmt/blob/e233f3084f028fe003f2fe47a6d76e19ebc821e5/src/crystal_fmt/table.cr#L6" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="data&#61;&#40;data&#41;-instance-method">
+      <div class="signature">
+        
+        def <strong>data=</strong>(data)
+
+        <a class="method-permalink" href="#data%3D%28data%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/masukomi/crystal_fmt/blob/e233f3084f028fe003f2fe47a6d76e19ebc821e5/src/crystal_fmt/table.cr#L7" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="extract_columns&#40;data:Array&#40;Array&#40;String?&#41;&#41;&#41;:Array&#40;Column&#41;-instance-method">
+      <div class="signature">
+        
+        def <strong>extract_columns</strong>(data : Array(Array(String?))) : Array(<a href="Column.html">Column</a>)
+
+        <a class="method-permalink" href="#extract_columns%28data%3AArray%28Array%28String%3F%29%29%29%3AArray%28Column%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Extracts Column objects from the provided data
+primarily for use use by this class, but you may find it
+useful too.</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/masukomi/crystal_fmt/blob/e233f3084f028fe003f2fe47a6d76e19ebc821e5/src/crystal_fmt/table.cr#L96" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="format&#40;options:Hash&#40;Symbol,String|Bool&#41;&#61;Hash&#40;Symbol,String|Bool&#41;.new&#41;:String-instance-method">
+      <div class="signature">
+        
+        def <strong>format</strong>(options : Hash(Symbol, String | Bool) = <span class="t">Hash</span>(<span class="t">Symbol</span>, <span class="t">String</span> <span class="o">|</span> <span class="t">Bool</span>).<span class="k">new</span>) : String
+
+        <a class="method-permalink" href="#format%28options%3AHash%28Symbol%2CString%7CBool%29%3DHash%28Symbol%2CString%7CBool%29.new%29%3AString-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Formats the data into a textual table.
+By default it will:</p>
+
+<ul><li>start each row with "| "</li><li>end each row with " |"</li><li>separate each item with " | "
+These defaults can be overridden by specifying :left_border, :right_border,
+or :divider (respectively) in the options.</li></ul>
+
+<p>By default it assumes the first row is a header.
+To disable the divider under the first row set options[:show_header] = false
+To change the character used for the divider set
+options[:header_divider] = &lt;any single character></p>
+
+<p>Example:
+[["things", "stuff"],["a", "b"], ["c", nil]]
+Would become
+| things | stuff |
+| ------ | ----- |
+| a      | b     |
+| c      |       |</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/masukomi/crystal_fmt/blob/e233f3084f028fe003f2fe47a6d76e19ebc821e5/src/crystal_fmt/table.cr#L81" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="width:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>width</strong> : Int32
+
+        <a class="method-permalink" href="#width%3AInt32-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Tells you how wide the table is</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/masukomi/crystal_fmt/blob/e233f3084f028fe003f2fe47a6d76e19ebc821e5/src/crystal_fmt/table.cr#L35" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+
+</div>
+
+</body>
+</html>
