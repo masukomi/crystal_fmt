@@ -31,6 +31,15 @@ class Table
     @data = Array(Array(String | Nil)).new
   end
 
+  # Tells you how wide the table is
+  def width : Int32
+    if !@data.empty? || !@columns.empty?
+      @columns.empty? ? @data[0].size : @columns.size
+    else
+      0
+    end
+  end
+
   # Adds a row of data.
   # Note: this must have the same number of items as all the other
   # rows that have been added.

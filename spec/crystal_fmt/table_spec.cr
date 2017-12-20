@@ -45,6 +45,21 @@ describe Table do
     columns.first.strings[0].should(eq("a"))
     columns.last.strings[-1].should(eq(nil))
   end
+
+  it "should know how wide it is before extracting columns" do
+    t = Table.new(default_data())
+    t.width.should(eq(2))
+  end
+  it "should know how wide it is after extracting columns" do
+    t = Table.new(default_data())
+    t.extract_columns(t.data)
+    t.width.should(eq(2))
+  end
+  it "should know how wide it is when empty" do
+    t = Table.new(Array(Array(String | Nil)).new)
+    t.width.should(eq(0))
+  end
+
   it "should return initialization columns" do
     c = Column.new(Array(String | Nil).new + ["1", "22", nil, "333", "4444"])
     cols = Array(Column).new
