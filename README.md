@@ -8,13 +8,13 @@ custom borders, dividers, and header separator.
 For example:
 
 ```crystal
-[["things", "stuff"],["a", "b"], ["c", nil]]
+[["things", "stuff"], ["a", "b"], ["c", nil]]
 ```
 
 would be converted to...
 
 ```text
-| things | stuff |
+| things | stuff  |
 | ------ | ----- |
 | a      | b     |
 | c      |       |
